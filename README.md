@@ -1,5 +1,4 @@
-Booking-App è il lato Angular dell'App
-Bookings-manager lat Spring
+Booking-App è il lato Angular dell'App, Bookings-manager lato Spring
 
 Non ho cambiato i dati di accesso del db in application.properties, per testare creane uno di test, lancia e dovrebbe andare online. Poi come al solito scarichi la cartella angular "Booking-app", npm install e dovrebbero esserci tutte le dipendenze. L'app è stata fatta utilizzando tailwind ed è una SPA, tutto nel singolo componente principale.
 
