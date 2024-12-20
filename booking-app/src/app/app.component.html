@@ -1,0 +1,178 @@
+<div class="bg-image flex justify-center items-center h-screen">
+  <div class="bg-slate-950 text-white p-8 w-3/4 mx-a h-5/6">
+    <h1 class="text-center font-bold text-yellow-500 mb-8 text-xl">
+      BOOKINGS MANAGER
+    </h1>
+
+    <ul class="flex mb-8 justify-center">
+      <li
+        class="me-4 font-bold italic cursor-pointer hover:text-slate-500 hover:border-slate-500"
+        [ngClass]="{ 'border-b-2': selectedItem === 'Create User' }"
+        (click)="selectedItem = 'Create User'"
+      >
+        Create User
+      </li>
+      <li
+        class="me-4 font-bold italic cursor-pointer hover:text-slate-500 hover:border-slate-500"
+        [ngClass]="{ 'border-b-2': selectedItem === 'Search Workstation' }"
+        (click)="selectedItem = 'Search Workstation'"
+      >
+        Search Workstation
+      </li>
+      <li
+        class="me-4 font-bold italic cursor-pointer hover:text-slate-500 hover:border-slate-500"
+        [ngClass]="{ 'border-b-2': selectedItem === 'Create Booking' }"
+        (click)="selectedItem = 'Create Booking'"
+      >
+        Create Booking
+      </li>
+    </ul>
+
+    <form
+      *ngIf="selectedItem === 'Create User'"
+      class="flex flex-col items-center"
+      (ngSubmit)="createUser()"
+      #userForm="ngForm"
+    >
+      <label class="w-1/2 flex justify-between items-center"
+        >Username:
+        <input
+          class="rounded-sm my-2 text-black px-2 py-1 bg-gray-200 focus-within:bg-white"
+          type="text"
+          [(ngModel)]="newUser.username"
+          name="username"
+          required /></label
+      ><br />
+      <label class="w-1/2 flex justify-between items-center"
+        >Full Name:
+        <input
+          class="rounded-sm my-2 text-black px-2 py-1 bg-gray-200 focus-within:bg-white"
+          type="text"
+          [(ngModel)]="newUser.fullName"
+          name="fullName"
+          required /></label
+      ><br />
+      <label class="w-1/2 flex justify-between items-center"
+        >Email:
+        <input
+          class="rounded-sm my-2 text-black px-2 py-1 bg-gray-200 focus-within:bg-white"
+          type="email"
+          [(ngModel)]="newUser.email"
+          name="email"
+          required /></label
+      ><br />
+      <button
+        class="bg-yellow-400 px-4 py-2 rounded-sm mx-auto my-8 text-black font-bold hover:bg-yellow-600 hover:text-slate-800"
+        type="submit"
+      >
+        Create User
+      </button>
+    </form>
+    <p
+      *ngIf="selectedItem === 'Create User'"
+      class="mb-4 text-sky-200 text-center"
+    >
+      {{ userMessage }}
+    </p>
+
+    <div *ngIf="selectedItem === 'Search Workstation'">
+      <div class="flex flex-col items-center">
+        <label class="w-1/2 flex justify-between items-center"
+          >Type:
+          <select
+            [(ngModel)]="searchType"
+            name="type"
+            class="rounded-sm my-2 text-black px-2 py-1 w-48 bg-gray-200 focus-within:bg-white"
+          >
+            <option value="PRIVATE">PRIVATE</option>
+            <option value="OPENSPACE">OPENSPACE</option>
+            <option value="MEETING_ROOM">MEETING ROOM</option>
+          </select>
+        </label>
+        <br />
+        <label class="w-1/2 flex justify-between items-center"
+          >City:
+          <select
+            [(ngModel)]="searchCity"
+            name="city"
+            class="rounded-sm my-2 text-black px-2 py-1 w-48 bg-gray-200 focus-within:bg-white"
+          >
+            <option value="Rome">Rome</option>
+            <option value="Milan">Milan</option>
+            <option value="Turin">Turin</option>
+            <option value="Naples">Naples</option>
+            <option value="Florence">Florence</option>
+          </select>
+        </label>
+        <br />
+        <button
+          class="bg-yellow-400 px-4 py-2 rounded-sm mx-auto my-8 text-black font-bold hover:bg-yellow-600 hover:text-slate-800"
+          (click)="searchWorkstations()"
+        >
+          Search
+        </button>
+      </div>
+
+      <div class="flex justify-center flex-col items-center">
+        <h3 class="mb-4">Results:</h3>
+
+        <div class="flex">
+          <div class="mx-8 p-4 bg-gray-700" *ngFor="let ws of workstations">
+            <ul>
+              <li>
+                ID: <span class="text-sky-300 font-bold">{{ ws.id }}</span>
+              </li>
+              <li>
+                Code: <span class="text-sky-300 font-bold">{{ ws.code }}</span>
+              </li>
+              <li class="text-black font-medium">{{ ws.description }}</li>
+              <li class="italic text-black">
+                {{ ws.buildingName }}, {{ ws.buildingCity }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="selectedItem === 'Create Booking'"
+      class="flex flex-col items-center"
+    >
+      <label class="w-1/2 flex justify-between items-center"
+        >Username:
+        <input
+          class="rounded-sm my-2 text-black px-2 py-1 bg-gray-200 focus-within:bg-white"
+          type="text"
+          [(ngModel)]="bookingUsername"
+          name="bUsername" /></label
+      ><br />
+      <label class="w-1/2 flex justify-between items-center"
+        >Workstation ID:
+        <input
+          class="rounded-sm my-2 text-black px-2 py-1 bg-gray-200 focus-within:bg-white"
+          type="number"
+          [(ngModel)]="bookingWorkstationId"
+          name="bWorkstationId" /></label
+      ><br />
+      <label class="w-1/2 flex justify-between items-center"
+        >Date:
+        <input
+          class="rounded-sm my-2 text-black px-2 py-1 w-48 bg-gray-200 focus-within:bg-white"
+          type="date"
+          [(ngModel)]="bookingDate"
+          name="bDate" /></label
+      ><br />
+      <button
+        class="bg-yellow-400 px-8 py-2 rounded-sm mx-auto my-8 text-black font-bold hover:bg-yellow-600 hover:text-slate-800"
+        (click)="createBooking()"
+      >
+        Book
+      </button>
+      <p class="text-slate-500">
+        !!! Please make sure the user and workstation exist before booking. !!!
+      </p>
+      <p class="mb-4 text-sky-200">{{ bookingMessage }}</p>
+    </div>
+  </div>
+</div>
